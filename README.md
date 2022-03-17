@@ -21,3 +21,6 @@ Buzzvil의 핵심 사업인 모바일 광고 엔진을 적용한 예시 서비�
 ### ● 기술 스택
 ![badge](https://img.shields.io/badge/SCM-Github-181717?logo=Github) ![badge](https://img.shields.io/badge/SCM-Git-F05032?logo=Git) ![badge](https://img.shields.io/badge/Package-Gradle-02303A?logo=Gradle) ![badge](https://img.shields.io/badge/Language-Java-007396?logo=Java) ![badge](https://img.shields.io/badge/Framework-Android-3DDC84?logo=Android) ![badge](https://img.shields.io/badge/IDE-Android_Studio-3DDC84?logo=Android-Studio) ![badge](https://img.shields.io/badge/Library-Glide-21baa2) ![badge](https://img.shields.io/badge/Library-Retrofit2-47b984) ![badge](https://img.shields.io/badge/Library-okHttp3-009485) ![badge](https://img.shields.io/badge/Library-RxJava2-b7178b) ![badge](https://img.shields.io/badge/Library-Espresso-946e59)
 
+
+## :globe_with_meridians: 시스템 구조
+![아키텍처](images/architecture.png)
