@@ -3,8 +3,9 @@
     package="com.ababqq.buzzvil_test_android">
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/buzzvil_symbol_red_rgb"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
