@@ -12,6 +12,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.NavOptionsBuilder;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,14 @@ public class SplashFragment extends Fragment {
             @Override
             public void fetchedViewPagerConfig(Response response) {
                 AppDatabase.saveViewPagerConfig(requireContext(), response);
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    Intent intent = new Intent(requireContext(), MainActivity.class);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                    requireActivity().finish();
+                }, 600);
             }
 
             @Override

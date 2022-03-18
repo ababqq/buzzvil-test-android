@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".feature.viewpager.ViewPagerFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel" />
+
+        <variable
+            name="listener"
+            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnButtonClickListener" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
-
-</FrameLayout>
+        android:orientation="vertical"
+        tools:context=".feature.viewpager.ViewPagerFragment">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/buzzvil_primary_light"
+            android:onClick="@{() -> listener.onFragmentChangeButtonClick()}"
+            android:text="@string/viewpager_txt_bookmark"
+            android:layout_marginTop="42dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/viewpager_pager"/>
+    </RelativeLayout>
+</layout>
