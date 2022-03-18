@@ -15,10 +15,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/viewpager_item_txt_loading"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:campaignImageUrl="@{campaignItem.imageUrl}"
+                tools:background="@color/black" />
+        </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{campaignItem.name}" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="@{campaignItem.name}"
+            android:textSize="18dp"
+            tools:text="name" />
 
     </LinearLayout>
 </layout>

@@ -2,6 +2,7 @@
     <string name="app_name">buzzvil-test-android</string>
 
     <string name="viewpager_txt_bookmark">Bookmark</string>
+    <string name="viewpager_item_txt_loading">Campaign Loading...</string>
 
 
     <string name="fail_fetched_config">Sorry, The service is under updates.\nWe look forward to providing you with better service.</string>
