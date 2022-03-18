@@ -6,13 +6,21 @@
     <data>
 
         <variable
+            name="itemPosition"
+            type="Integer" />
+        <variable
             name="campaignItem"
             type="com.ababqq.buzzvil_test_android.models.CampaignVO" />
+
+        <variable
+            name="listener"
+            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnCampaignClickListener" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:onClick="@{() -> listener.onCampaignItemClick(itemPosition)}"
         android:orientation="vertical">
 
         <RelativeLayout

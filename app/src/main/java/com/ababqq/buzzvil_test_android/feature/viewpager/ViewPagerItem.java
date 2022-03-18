@@ -3,6 +3,7 @@ package com.ababqq.buzzvil_test_android.feature.viewpager;
 import static com.ababqq.buzzvil_test_android.models.CommonCode.BUNDLE_CAMPAIGN_ITEM_POSITION;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerItemBinding;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
-public class ViewPagerItem extends Fragment {
+public class ViewPagerItem extends Fragment implements OnCampaignClickListener {
     private static final String TAG = ViewPagerItem.class.getSimpleName();
     private ViewPagerItemBinding mBinding;
     private ViewPagerViewModel mViewModel;
@@ -48,7 +49,9 @@ public class ViewPagerItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = mBinding.inflate(LayoutInflater.from(getContext()));
+        mBinding.setItemPosition(mItemPosition);
         mBinding.setCampaignItem(mViewModel.getCampaignList().getValue().get(mItemPosition));
+        mBinding.setListener(this::onCampaignItemClick);
         return mBinding.getRoot();
     }
 
@@ -58,4 +61,8 @@ public class ViewPagerItem extends Fragment {
 
     }
 
+    @Override
+    public void onCampaignItemClick(int position) {
+        mViewModel.setCampaignViewer(position);
+    }
 }

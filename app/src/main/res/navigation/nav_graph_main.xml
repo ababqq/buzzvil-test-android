@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_viewpager_fragment_to_bookmark_fragment"
             app:destination="@id/bookmark_fragment" />
+        <action
+            android:id="@+id/action_viewpager_fragment_to_viewpager_detail_fragment_fragment"
+            app:destination="@id/viewpager_detail_fragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmark_fragment"
         android:name="com.ababqq.buzzvil_test_android.feature.bookmark.BookMarkFragment"
         tools:layout="@layout/book_mark_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/viewpager_detail_fragment"
+        android:name="com.ababqq.buzzvil_test_android.feature.viewpager.detail.ViewPagerItemDetailFragment"
+        tools:layout="@layout/view_pager_fragment_detail">
     </fragment>
 </navigation>

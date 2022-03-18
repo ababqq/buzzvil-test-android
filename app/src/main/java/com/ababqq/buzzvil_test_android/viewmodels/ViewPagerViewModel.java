@@ -18,7 +18,12 @@ public class ViewPagerViewModel extends ViewModel {
     private final String TAG = ViewPagerViewModel.class.getSimpleName();
     private ViewPagerRepository mRepository = new ViewPagerRepository();
 
+    private SingleLiveEvent<Integer> mCampaignViewer = new SingleLiveEvent<>();
     private SingleLiveEvent<List<CampaignVO>> mCampaignList = new SingleLiveEvent<>();
+
+    public SingleLiveEvent<Integer> navigateToViewerWithPosition() {
+        return mCampaignViewer;
+    }
 
     public SingleLiveEvent<List<CampaignVO>> getCampaignList() {
         if (mCampaignList.getValue() == null)
@@ -32,5 +37,13 @@ public class ViewPagerViewModel extends ViewModel {
 
     public void setCampaignItems(Response response) {
         mCampaignList.setValue(response.campaignVOList);
+    }
+
+    public void setCampaignViewer(int position) {
+        mCampaignViewer.setValue(position);
+    }
+
+    public CampaignVO getCampaignViewer() {
+        return mCampaignList.getValue().get(mCampaignViewer.getValue());
     }
 }

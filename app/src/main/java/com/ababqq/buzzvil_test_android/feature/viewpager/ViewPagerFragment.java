@@ -29,6 +29,7 @@ public class ViewPagerFragment extends Fragment implements OnButtonClickListener
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
         observeCampaignList();
+        observeCampaignClick();
         mViewModel.loadAdCampaigns(new OnCampaignFetchedListener() {
             @Override
             public void fetchedCampaign(Response response) {
@@ -62,6 +63,11 @@ public class ViewPagerFragment extends Fragment implements OnButtonClickListener
             mAdapter.notifyDataSetChanged();
         });
     }
+    private void observeCampaignClick() {
+        mViewModel.navigateToViewerWithPosition().observe(requireActivity(), selectedPosition -> {
+            navigateToCampaignViewer(selectedPosition);
+        });
+    }
 
     private void initPager() {
         mAdapter = new ViewPagerAdapter(requireActivity(), mViewModel);
@@ -71,5 +77,9 @@ public class ViewPagerFragment extends Fragment implements OnButtonClickListener
     @Override
     public void onFragmentChangeButtonClick() {
         Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_bookmark_fragment);
+    }
+
+    private void navigateToCampaignViewer(int selectedPosition) {
+        Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_viewpager_detail_fragment_fragment);
     }
 }
