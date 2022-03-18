@@ -1,19 +1,20 @@
 package com.ababqq.buzzvil_test_android.api;
 
-import com.ababqq.motov_test_android.entity.WeatherResponse;
+import com.ababqq.buzzvil_test_android.entity.AdsResponse;
+import com.ababqq.buzzvil_test_android.entity.CampaignsResponse;
+import com.ababqq.buzzvil_test_android.entity.ConfigResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public interface TestApi {
 
     @GET("test_config.json")
-    Observable<WeatherResponse> getConfig();
+    Observable<ConfigResponse> getConfig();
 
     @GET("test_ads.json")
-    Observable<WeatherResponse> getAds();
+    Observable<AdsResponse> getAds();
 
     @GET("test_articles.json")
-    Observable<WeatherResponse> getArticles();
+    Observable<CampaignsResponse> getArticles();
 }

@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <color name="buzzvil_primary">#FFF44336</color>
+    <color name="buzzvil_primary_dark">#FFC2291D</color>
+    <color name="buzzvil_primary_light">#FFFF695E</color>
 </resources>

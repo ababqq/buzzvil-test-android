@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CampaignsResponse {
+public class CampaignsResponse extends Response {
 
    @SerializedName("campaigns")
    @Expose
