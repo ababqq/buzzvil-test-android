@@ -1,57 +1,71 @@
 package com.ababqq.buzzvil_test_android.feature.viewpager;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+
 import com.ababqq.buzzvil_test_android.R;
-import com.ababqq.buzzvil_test_android.databinding.SplashFragmentBinding;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
 import com.ababqq.buzzvil_test_android.entity.Response;
-import com.ababqq.buzzvil_test_android.feature.MainActivity;
-import com.ababqq.buzzvil_test_android.feature.splash.OnConfigFetchedListener;
-import com.ababqq.buzzvil_test_android.models.AppDatabase;
-import com.ababqq.buzzvil_test_android.viewmodels.SplashViewModel;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
 public class ViewPagerFragment extends Fragment implements OnButtonClickListener{
-
+    private static final String TAG = ViewPagerFragment.class.getSimpleName();
     private ViewPagerViewModel mViewModel;
     private ViewPagerFragmentBinding mBinding;
-
-    public static ViewPagerFragment newInstance() {
-        return new ViewPagerFragment();
-    }
+    private ViewPagerAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
+        observeCampaignList();
+        mViewModel.loadAdCampaigns(new OnCampaignFetchedListener() {
+            @Override
+            public void fetchedCampaign(Response response) {
+                mViewModel.setCampaignItems(response);
+            }
+
+            @Override
+            public void fetchedFailCampaign(Throwable error) {
+                Toast.makeText(requireContext(), getText(R.string.fail_fetched_ads), Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mBinding.setViewModel(mViewModel);
         mBinding.setListener(this::onFragmentChangeButtonClick);
+        initPager();
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void observeCampaignList() {
+        mViewModel.getCampaignList().observe(requireActivity(), campaignVO -> {
+            mAdapter.notifyDataSetChanged();
+        });
+    }
+
+    private void initPager() {
+        mAdapter = new ViewPagerAdapter(requireActivity(), mViewModel);
+        mBinding.viewpagerPager.setAdapter(mAdapter);
     }
 
     @Override

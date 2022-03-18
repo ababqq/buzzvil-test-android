@@ -13,7 +13,7 @@ public interface TestApi {
     Observable<ConfigResponse> getConfig();
 
     @GET("test_ads.json")
-    Observable<AdsResponse> getAds();
+    Observable<AdsResponse> getAdCampaigns();
 
     @GET("test_articles.json")
     Observable<CampaignsResponse> getArticles();

@@ -19,18 +19,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".feature.viewpager.ViewPagerFragment">
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="200dp"
+            android:orientation="horizontal" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/viewpager_pager"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
             android:background="@color/buzzvil_primary_light"
             android:onClick="@{() -> listener.onFragmentChangeButtonClick()}"
-            android:text="@string/viewpager_txt_bookmark"
-            android:layout_marginTop="42dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/viewpager_pager"/>
+            android:text="@string/viewpager_txt_bookmark" />
     </RelativeLayout>
 </layout>
