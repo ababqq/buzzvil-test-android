@@ -52,6 +52,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
     implementation "androidx.viewpager2:viewpager2:$rootProject.viewPagerVersion"
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
 
