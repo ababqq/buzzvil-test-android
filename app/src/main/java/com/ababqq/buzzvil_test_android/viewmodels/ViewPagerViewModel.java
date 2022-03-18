@@ -30,7 +30,6 @@ public class ViewPagerViewModel extends ViewModel {
             mCampaignList.setValue(new ArrayList<>());
         return mCampaignList;
     }
-
     public void loadAdCampaigns(OnCampaignFetchedListener listener) {
         mRepository.requestAdCampaigns(listener);
     }
@@ -45,5 +44,12 @@ public class ViewPagerViewModel extends ViewModel {
 
     public CampaignVO getCampaignViewer() {
         return mCampaignList.getValue().get(mCampaignViewer.getValue());
+    }
+
+    public void removeCampaign() {
+        Log.e(TAG, mCampaignList.getValue().size()+"a"+mCampaignViewer.getValue());
+        mCampaignList.getValue().remove(mCampaignViewer.getValue().intValue());
+        mCampaignList.setValue(mCampaignList.getValue());
+        Log.e(TAG, mCampaignList.getValue().size()+"b"+mCampaignViewer.getValue());
     }
 }

@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnButtonClickListener" />
+            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnNavigateBtnClickListener" />
     </data>
 
     <RelativeLayout

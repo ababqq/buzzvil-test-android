@@ -18,7 +18,7 @@ import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
 import com.ababqq.buzzvil_test_android.entity.Response;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
-public class ViewPagerFragment extends Fragment implements OnButtonClickListener{
+public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickListener {
     private static final String TAG = ViewPagerFragment.class.getSimpleName();
     private ViewPagerViewModel mViewModel;
     private ViewPagerFragmentBinding mBinding;
@@ -60,12 +60,13 @@ public class ViewPagerFragment extends Fragment implements OnButtonClickListener
 
     private void observeCampaignList() {
         mViewModel.getCampaignList().observe(requireActivity(), campaignVO -> {
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
+            //todo : error on here.
         });
     }
     private void observeCampaignClick() {
         mViewModel.navigateToViewerWithPosition().observe(requireActivity(), selectedPosition -> {
-            navigateToCampaignViewer(selectedPosition);
+            navigateToCampaignViewer();
         });
     }
 
@@ -79,7 +80,7 @@ public class ViewPagerFragment extends Fragment implements OnButtonClickListener
         Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_bookmark_fragment);
     }
 
-    private void navigateToCampaignViewer(int selectedPosition) {
+    private void navigateToCampaignViewer() {
         Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_viewpager_detail_fragment_fragment);
     }
 }

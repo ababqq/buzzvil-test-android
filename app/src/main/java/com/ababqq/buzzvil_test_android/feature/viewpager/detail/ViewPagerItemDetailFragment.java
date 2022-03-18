@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
-import com.ababqq.buzzvil_test_android.databinding.SplashFragmentBinding;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentDetailBinding;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
-public class ViewPagerItemDetailFragment extends Fragment {
+public class ViewPagerItemDetailFragment extends Fragment implements OnRemoveBtnClickListener {
 
     private ViewPagerViewModel mViewModel;
     private ViewPagerFragmentDetailBinding mBinding;
@@ -32,11 +32,18 @@ public class ViewPagerItemDetailFragment extends Fragment {
         mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mBinding.setViewModel(mViewModel);
         mBinding.setCampaignItem(mViewModel.getCampaignViewer());
+        mBinding.setListener(this::onRemoveContentButtonClick);
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onRemoveContentButtonClick() {
+        mViewModel.removeCampaign();
+        Navigation.findNavController(mBinding.getRoot()).popBackStack();
     }
 }
