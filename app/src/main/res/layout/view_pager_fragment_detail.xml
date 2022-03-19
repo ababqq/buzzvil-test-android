@@ -11,7 +11,7 @@
 
         <variable
             name="campaignItem"
-            type="com.ababqq.buzzvil_test_android.models.CampaignVO" />
+            type="com.ababqq.buzzvil_test_android.models.CampaignBean" />
 
         <variable
             name="listener"

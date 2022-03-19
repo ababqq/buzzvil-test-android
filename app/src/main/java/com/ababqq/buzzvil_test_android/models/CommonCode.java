@@ -5,4 +5,6 @@ public class CommonCode {
 
     public static final String BUNDLE_CAMPAIGN_ITEM_POSITION = "BUNDLE_CAMPAIGN_ITEM_POSITION";
 
+    public static final String BASE_DATABASE = "BASE_DATABASE";
+
 }

@@ -35,7 +35,7 @@ public class ViewPagerRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         adsResponse -> {
-                            Logger.json(TAG, adsResponse);
+                            //Logger.json(TAG, adsResponse);
                             listener.fetchedCampaign(adsResponse);
                         },
                         error -> {
@@ -52,7 +52,7 @@ public class ViewPagerRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         articlesResponse -> {
-                            Logger.json(TAG, articlesResponse);
+                            //Logger.json(TAG, articlesResponse);
                             listener.fetchedCampaign(articlesResponse);
                         },
                         error -> {

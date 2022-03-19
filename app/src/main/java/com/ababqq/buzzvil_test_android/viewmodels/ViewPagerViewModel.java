@@ -1,38 +1,57 @@
 package com.ababqq.buzzvil_test_android.viewmodels;
 
+import android.app.Application;
 import android.util.Log;
 
-import androidx.lifecycle.ViewModel;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 import com.ababqq.buzzvil_test_android.entity.AdsResponse;
 import com.ababqq.buzzvil_test_android.entity.ArticlesResponse;
 import com.ababqq.buzzvil_test_android.entity.Response;
+import com.ababqq.buzzvil_test_android.feature.viewpager.CampaignRepository;
 import com.ababqq.buzzvil_test_android.feature.viewpager.OnCampaignFetchedListener;
 import com.ababqq.buzzvil_test_android.feature.viewpager.ViewPagerRepository;
-import com.ababqq.buzzvil_test_android.models.CampaignVO;
+import com.ababqq.buzzvil_test_android.models.CampaignBean;
 import com.ababqq.buzzvil_test_android.mvvm.SingleLiveEvent;
 import com.ababqq.buzzvil_test_android.utilities.DataCollection;
+import com.ababqq.buzzvil_test_android.utilities.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerViewModel extends ViewModel {
+public class ViewPagerViewModel extends AndroidViewModel {
     private final String TAG = ViewPagerViewModel.class.getSimpleName();
     private ViewPagerRepository mRepository = new ViewPagerRepository();
-
+    private CampaignRepository mCampaignRepository;
     private SingleLiveEvent<Integer> mCampaignViewer = new SingleLiveEvent<>();
     private SingleLiveEvent<Integer> mCampaignListEv = new SingleLiveEvent<>();
-    private List<CampaignVO> mCampaignList = new ArrayList();
+    private List<CampaignBean> mCampaignList = new ArrayList();
+    private List<CampaignBean> mCampaignBucketList = new ArrayList();
     private final int INIT_STATE = 3;
     private int state;
+
+    public ViewPagerViewModel(@NonNull Application application) {
+        super(application);
+        mCampaignRepository = new CampaignRepository(application);
+    }
 
     public SingleLiveEvent<Integer> navigateToViewerWithPosition() {
         return mCampaignViewer;
     }
 
-    public void loadData() {
+    public void loadDataFromLocalDB() {
+        Log.e(TAG, "loadDataFromLocalDB");
+        Log.e(TAG, "repo size : "+mCampaignRepository.getAllCampaign().size());
+        Log.e(TAG, "list size : "+mCampaignList.size());
+        mCampaignList = mCampaignRepository.getAllCampaign();
+        Log.e(TAG, "repo copy to list");
+        Log.e(TAG, "list size : "+mCampaignList.size());
+        mCampaignListEv.call();
+    }
+    public void loadDataFromNetwork() {
         state = INIT_STATE;
-        mCampaignList.clear();
+        mCampaignBucketList.clear();
         mRepository.requestAdCampaigns(new OnCampaignFetchedListener() {
             @Override
             public void fetchedCampaign(Response response) {
@@ -57,23 +76,33 @@ public class ViewPagerViewModel extends ViewModel {
         });
     }
 
-    public List<CampaignVO> getCampaignList() {
+    public List<CampaignBean> getCampaignList() {
         return mCampaignList;
+    }
+    public List<CampaignBean> getCampaignListFromDB() {
+        return mCampaignRepository.getAllCampaign();
     }
 
     public void setCampaignItems(Response response) {
         if (response instanceof AdsResponse) {
-            mCampaignList.addAll(((AdsResponse) response).campaignVOList);
+            mCampaignBucketList.addAll(((AdsResponse) response).campaignVOList);
             state -= 1;
+            Log.e(TAG, "Receive Ads size : "+((AdsResponse) response).campaignVOList.size()+" "+mCampaignBucketList.size());
         } else if (response instanceof ArticlesResponse) {
-            mCampaignList.addAll(((ArticlesResponse) response).campaignVOList);
+            mCampaignBucketList.addAll(((ArticlesResponse) response).campaignVOList);
             state -= 2;
+            Log.e(TAG, "Receive Article size : "+((ArticlesResponse) response).campaignVOList.size()+" "+mCampaignBucketList.size());
         }
         if (state == 0) {
-            CampaignVO firstItem = DataCollection.pickFirstCampaign(mCampaignList);
-            mCampaignList.remove(firstItem);
-            mCampaignList = DataCollection.shuffleCampaigns(mCampaignList);
+            CampaignBean firstItem = DataCollection.pickFirstCampaign(mCampaignBucketList);
+            mCampaignBucketList.remove(firstItem);
+            mCampaignList.clear();
+            mCampaignList = DataCollection.shuffleCampaigns(mCampaignBucketList);
             mCampaignList.add(0, firstItem);
+            mCampaignRepository.deleteAll();
+            mCampaignRepository.insertAll(mCampaignList);
+            Log.e(TAG, ""+mCampaignRepository.getAllCampaign().size());
+
             mCampaignListEv.call();
         }
     }
@@ -86,7 +115,7 @@ public class ViewPagerViewModel extends ViewModel {
         mCampaignViewer.setValue(position);
     }
 
-    public CampaignVO getCampaignViewer() {
+    public CampaignBean getCampaignViewer() {
         return mCampaignList.get(mCampaignViewer.getValue());
     }
 
@@ -95,5 +124,4 @@ public class ViewPagerViewModel extends ViewModel {
         mCampaignList.remove(mCampaignViewer.getValue().intValue());
         Log.e(TAG, mCampaignList.size() + " after " + mCampaignViewer.getValue());
     }
-
 }

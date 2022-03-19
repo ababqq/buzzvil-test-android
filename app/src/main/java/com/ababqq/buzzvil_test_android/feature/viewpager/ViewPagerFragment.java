@@ -25,31 +25,37 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
         observeCampaignList();
         observeCampaignClick();
-        mViewModel.loadData();
+        mViewModel.loadDataFromNetwork();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
         mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mBinding.setViewModel(mViewModel);
         mBinding.setListener(this::onFragmentChangeButtonClick);
         initPager();
+        mViewModel.loadDataFromLocalDB();
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated");
     }
 
     private void observeCampaignList() {
         mViewModel.getCampaignListEv().observe(requireActivity(), campaignVO -> {
             Log.e(TAG,"notifyDataSetChanged");
             mAdapter.notifyDataSetChanged();
+            if (mViewModel.getCampaignList().size() > 0)
+                Log.e(TAG, mViewModel.getCampaignList().get(0).toString());
             //todo : error on here.
         });
     }
@@ -60,7 +66,7 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
     }
 
     private void initPager() {
-        mAdapter = new ViewPagerAdapter(requireActivity(), mViewModel);
+        mAdapter = new ViewPagerAdapter(getActivity(), mViewModel);
         mBinding.viewpagerPager.setAdapter(mAdapter);
 
     }
