@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +14,6 @@ import androidx.navigation.Navigation;
 
 import com.ababqq.buzzvil_test_android.R;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
-import com.ababqq.buzzvil_test_android.entity.Response;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
 public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickListener {
@@ -30,17 +28,7 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
         observeCampaignList();
         observeCampaignClick();
-        mViewModel.loadAdCampaigns(new OnCampaignFetchedListener() {
-            @Override
-            public void fetchedCampaign(Response response) {
-                mViewModel.setCampaignItems(response);
-            }
-
-            @Override
-            public void fetchedFailCampaign(Throwable error) {
-                Toast.makeText(requireContext(), getText(R.string.fail_fetched_ads), Toast.LENGTH_LONG).show();
-            }
-        });
+        mViewModel.loadData();
     }
 
     @Override
@@ -59,8 +47,9 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
     }
 
     private void observeCampaignList() {
-        mViewModel.getCampaignList().observe(requireActivity(), campaignVO -> {
-            mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
+        mViewModel.getCampaignListEv().observe(requireActivity(), campaignVO -> {
+            Log.e(TAG,"notifyDataSetChanged");
+            mAdapter.notifyDataSetChanged();
             //todo : error on here.
         });
     }
@@ -73,6 +62,7 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
     private void initPager() {
         mAdapter = new ViewPagerAdapter(requireActivity(), mViewModel);
         mBinding.viewpagerPager.setAdapter(mAdapter);
+
     }
 
     @Override

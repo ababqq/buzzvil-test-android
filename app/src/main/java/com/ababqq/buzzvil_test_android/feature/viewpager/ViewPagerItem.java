@@ -50,7 +50,7 @@ public class ViewPagerItem extends Fragment implements OnCampaignClickListener {
                              Bundle savedInstanceState) {
         mBinding = mBinding.inflate(LayoutInflater.from(getContext()));
         mBinding.setItemPosition(mItemPosition);
-        mBinding.setCampaignItem(mViewModel.getCampaignList().getValue().get(mItemPosition));
+        mBinding.setCampaignItem(mViewModel.getCampaignList().get(mItemPosition));
         mBinding.setListener(this::onCampaignItemClick);
         return mBinding.getRoot();
     }

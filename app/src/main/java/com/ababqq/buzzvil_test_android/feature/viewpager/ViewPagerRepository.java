@@ -5,8 +5,7 @@ import android.util.Log;
 
 import com.ababqq.buzzvil_test_android.api.TestApi;
 import com.ababqq.buzzvil_test_android.entity.AdsResponse;
-import com.ababqq.buzzvil_test_android.entity.ConfigResponse;
-import com.ababqq.buzzvil_test_android.feature.splash.OnConfigFetchedListener;
+import com.ababqq.buzzvil_test_android.entity.ArticlesResponse;
 import com.ababqq.buzzvil_test_android.network.RetrofitInstance;
 import com.ababqq.buzzvil_test_android.utilities.Logger;
 
@@ -24,6 +23,11 @@ public class ViewPagerRepository {
                 .getAdCampaigns();
     }
 
+    private Observable<ArticlesResponse> getArticleCampaigns() {
+        return RetrofitInstance.getInstance().getRetrofit().create(TestApi.class)
+                .getArticleCampaigns();
+    }
+
     @SuppressLint("CheckResult")
     public void requestAdCampaigns(OnCampaignFetchedListener listener) {
         getAdCampaigns()
@@ -33,6 +37,23 @@ public class ViewPagerRepository {
                         adsResponse -> {
                             Logger.json(TAG, adsResponse);
                             listener.fetchedCampaign(adsResponse);
+                        },
+                        error -> {
+                            Log.d("requestViewPagerConfig", Objects.requireNonNull(error.getMessage()));
+                            listener.fetchedFailCampaign(error);
+                        }
+                );
+    }
+
+    @SuppressLint("CheckResult")
+    public void requestArticleCampaigns(OnCampaignFetchedListener listener) {
+        getArticleCampaigns()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        articlesResponse -> {
+                            Logger.json(TAG, articlesResponse);
+                            listener.fetchedCampaign(articlesResponse);
                         },
                         error -> {
                             Log.d("requestViewPagerConfig", Objects.requireNonNull(error.getMessage()));

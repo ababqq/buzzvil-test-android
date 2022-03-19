@@ -7,8 +7,7 @@
 
 
     <string name="fail_fetched_config">Sorry, The service is under updates.\nWe look forward to providing you with better service.</string>
-    <string name="fail_fetched_ads">Sorry, We do not have any Ads now</string>
-    <string name="fail_fetched_campaigns">Sorry, We do not have any Campaigns now</string>
+    <string name="fail_fetched_campaigns">Sorry, We can not get any campaigns now</string>
 
 
 </resources>

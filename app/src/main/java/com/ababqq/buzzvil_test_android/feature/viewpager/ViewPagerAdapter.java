@@ -26,6 +26,16 @@ class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return mViewModel.getCampaignList().getValue().size();
+        return mViewModel.getCampaignList().size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    @Override
+    public boolean containsItem(long itemId) {
+        return super.containsItem(itemId);
     }
 }

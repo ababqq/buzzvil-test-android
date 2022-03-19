@@ -1,7 +1,7 @@
 package com.ababqq.buzzvil_test_android.api;
 
 import com.ababqq.buzzvil_test_android.entity.AdsResponse;
-import com.ababqq.buzzvil_test_android.entity.CampaignsResponse;
+import com.ababqq.buzzvil_test_android.entity.ArticlesResponse;
 import com.ababqq.buzzvil_test_android.entity.ConfigResponse;
 
 import io.reactivex.Observable;
@@ -16,5 +16,6 @@ public interface TestApi {
     Observable<AdsResponse> getAdCampaigns();
 
     @GET("test_articles.json")
-    Observable<CampaignsResponse> getArticles();
+    Observable<ArticlesResponse> getArticleCampaigns();
+
 }
