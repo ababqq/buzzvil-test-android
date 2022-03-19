@@ -1,5 +1,6 @@
 package com.ababqq.buzzvil_test_android.feature.viewpager;
 
-public interface OnNavigateBtnClickListener {
+public interface OnViewPagerBtnClickListener {
  void onFragmentChangeButtonClick();
+ void onDataReloadButtonClick();
 }

@@ -16,7 +16,7 @@ public class DataCollection {
 
     public static List<CampaignBean> shuffleCampaigns(List<CampaignBean> campaignList) {
         Collections.shuffle(campaignList);
-        return campaignList;
+        return new ArrayList<>(campaignList);
     }
 
     public static CampaignBean pickFirstCampaign(List<CampaignBean> list) {

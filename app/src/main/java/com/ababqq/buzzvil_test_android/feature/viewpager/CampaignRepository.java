@@ -8,6 +8,7 @@ import com.ababqq.buzzvil_test_android.models.CampaignBean;
 import com.ababqq.buzzvil_test_android.models.CampaignDao;
 import com.ababqq.buzzvil_test_android.models.CampaignDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CampaignRepository {
@@ -63,7 +64,7 @@ public class CampaignRepository {
     }
 
     public List<CampaignBean> getAllCampaign() {
-        return campaignDao.getAllCampaign();
+        return new ArrayList<>(campaignDao.getAllCampaign());
     }
 
     private static class InsertCampaignAsyncTask extends AsyncTask<CampaignBean, Void, Void> {

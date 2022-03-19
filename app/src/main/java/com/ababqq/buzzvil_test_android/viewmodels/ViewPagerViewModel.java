@@ -42,16 +42,15 @@ public class ViewPagerViewModel extends AndroidViewModel {
 
     public void loadDataFromLocalDB() {
         Log.e(TAG, "loadDataFromLocalDB");
-        Log.e(TAG, "repo size : "+mCampaignRepository.getAllCampaign().size());
-        Log.e(TAG, "list size : "+mCampaignList.size());
         mCampaignList = mCampaignRepository.getAllCampaign();
-        Log.e(TAG, "repo copy to list");
-        Log.e(TAG, "list size : "+mCampaignList.size());
         mCampaignListEv.call();
     }
     public void loadDataFromNetwork() {
+        Log.e(TAG, "loadDataFromNetwork");
         state = INIT_STATE;
         mCampaignBucketList.clear();
+        mCampaignList.clear();
+        mCampaignListEv.call();
         mRepository.requestAdCampaigns(new OnCampaignFetchedListener() {
             @Override
             public void fetchedCampaign(Response response) {
@@ -101,7 +100,8 @@ public class ViewPagerViewModel extends AndroidViewModel {
             mCampaignList.add(0, firstItem);
             mCampaignRepository.deleteAll();
             mCampaignRepository.insertAll(mCampaignList);
-            Log.e(TAG, ""+mCampaignRepository.getAllCampaign().size());
+            Log.e(TAG, "repo size : "+mCampaignRepository.getAllCampaign().size());
+            Log.e(TAG, "list size : "+mCampaignList.size());
 
             mCampaignListEv.call();
         }

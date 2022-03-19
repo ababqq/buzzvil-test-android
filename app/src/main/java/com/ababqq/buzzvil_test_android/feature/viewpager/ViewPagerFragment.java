@@ -16,7 +16,7 @@ import com.ababqq.buzzvil_test_android.R;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
-public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickListener {
+public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickListener {
     private static final String TAG = ViewPagerFragment.class.getSimpleName();
     private ViewPagerViewModel mViewModel;
     private ViewPagerFragmentBinding mBinding;
@@ -29,7 +29,8 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
         observeCampaignList();
         observeCampaignClick();
-        mViewModel.loadDataFromNetwork();
+        if (mViewModel.getCampaignListFromDB().size() == 0)
+            mViewModel.loadDataFromNetwork();
     }
 
     @Override
@@ -38,9 +39,11 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
         Log.d(TAG, "onCreateView");
         mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mBinding.setViewModel(mViewModel);
-        mBinding.setListener(this::onFragmentChangeButtonClick);
+        mBinding.setListener(this);
         initPager();
-        mViewModel.loadDataFromLocalDB();
+        if(mViewModel.getCampaignList().size() == 0)
+            mViewModel.loadDataFromLocalDB();
+        mAdapter.notifyDataSetChanged();
         return mBinding.getRoot();
     }
 
@@ -74,6 +77,11 @@ public class ViewPagerFragment extends Fragment implements OnNavigateBtnClickLis
     @Override
     public void onFragmentChangeButtonClick() {
         Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_bookmark_fragment);
+    }
+
+    @Override
+    public void onDataReloadButtonClick() {
+        mViewModel.loadDataFromNetwork();
     }
 
     private void navigateToCampaignViewer() {

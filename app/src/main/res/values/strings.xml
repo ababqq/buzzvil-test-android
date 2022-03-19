@@ -2,6 +2,7 @@
     <string name="app_name">buzzvil-test-android</string>
 
     <string name="viewpager_txt_bookmark">Bookmark</string>
+    <string name="viewpager_txt_reload_data">Reload data</string>
     <string name="viewpager_item_txt_loading">Campaign Loading...</string>
     <string name="viewpager_item_detail_txt_remove">Do not see this content.</string>
 

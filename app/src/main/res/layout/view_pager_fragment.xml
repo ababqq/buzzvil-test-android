@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnNavigateBtnClickListener" />
+            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnViewPagerBtnClickListener" />
     </data>
 
     <RelativeLayout
@@ -26,14 +26,29 @@
             android:layout_height="600dp"
             android:orientation="horizontal" />
 
-        <Button
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewpager_pager"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="42dp"
-            android:background="@color/buzzvil_primary_light"
-            android:onClick="@{() -> listener.onFragmentChangeButtonClick()}"
-            android:text="@string/viewpager_txt_bookmark" />
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@color/buzzvil_primary_light"
+                android:onClick="@{() -> listener.onDataReloadButtonClick()}"
+                android:text="@string/viewpager_txt_reload_data" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:background="@color/buzzvil_primary_light"
+                android:onClick="@{() -> listener.onFragmentChangeButtonClick()}"
+                android:text="@string/viewpager_txt_bookmark" />
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>
