@@ -12,6 +12,9 @@
         <variable
             name="listener"
             type="com.ababqq.buzzvil_test_android.feature.viewpager.OnViewPagerBtnClickListener" />
+        <variable
+            name="isFailedFetchData"
+            type="java.lang.Boolean" />
     </data>
 
     <RelativeLayout
@@ -20,16 +23,29 @@
         android:orientation="vertical"
         tools:context=".feature.viewpager.ViewPagerFragment">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager_pager"
+        <FrameLayout
+            android:id="@+id/viewpager_frame"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:orientation="horizontal" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/viewpager_pager_state_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="26dp"
+                android:text="@{isFailedFetchData ? @string/viewpager_fail_fetched_campaigns : @string/viewpager_request_fetching_campaigns}"/>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager_pager"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:orientation="horizontal" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewpager_pager"
+            android:layout_below="@+id/viewpager_frame"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="42dp"
             android:orientation="horizontal">

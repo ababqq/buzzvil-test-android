@@ -27,6 +27,7 @@ public class ViewPagerItem extends Fragment implements OnCampaignClickListener {
     }
 
     public static ViewPagerItem newInstance(int position) {
+        Log.e(TAG, "newInstance : "+position);
         ViewPagerItem fragment = new ViewPagerItem();
         Bundle bundle = new Bundle();
         bundle.putInt(BUNDLE_CAMPAIGN_ITEM_POSITION, position);
@@ -43,11 +44,15 @@ public class ViewPagerItem extends Fragment implements OnCampaignClickListener {
         }
 
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
+        Log.e(TAG, "onCreate : "+mItemPosition);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView : "+mItemPosition);
+        if (mItemPosition == mViewModel.getCampaignList().size())
+            return mBinding.getRoot();
         mBinding = mBinding.inflate(LayoutInflater.from(getContext()));
         mBinding.setItemPosition(mItemPosition);
         mBinding.setCampaignItem(mViewModel.getCampaignList().get(mItemPosition));
@@ -58,7 +63,7 @@ public class ViewPagerItem extends Fragment implements OnCampaignClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.e(TAG, "onViewCreated : "+mItemPosition);
     }
 
     @Override

@@ -16,10 +16,11 @@ import androidx.navigation.Navigation;
 
 import com.ababqq.buzzvil_test_android.R;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
+import com.ababqq.buzzvil_test_android.entity.Response;
 import com.ababqq.buzzvil_test_android.models.AppDatabase;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
-public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickListener {
+public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickListener, OnCampaignFetchedListener {
     private static final String TAG = ViewPagerFragment.class.getSimpleName();
     private ViewPagerViewModel mViewModel;
     private ViewPagerFragmentBinding mBinding;
@@ -36,7 +37,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         observeCampaignList();
         observeCampaignClick();
         if (mViewModel.getCampaignListFromDB().size() == 0)
-            mViewModel.loadDataFromNetwork();
+            loadDataFromNetwork();
     }
 
     private void initFirstCampaignRatio() {
@@ -50,8 +51,9 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mBinding.setViewModel(mViewModel);
         mBinding.setListener(this);
+        mBinding.setIsFailedFetchData(false);
         initPager();
-        if(mViewModel.getCampaignList().size() == 0)
+        if (mViewModel.getCampaignList().size() == 0)
             mViewModel.loadDataFromLocalDB();
         mAdapter.notifyDataSetChanged();
         initBroadcastReceiver();
@@ -73,13 +75,13 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
 
     private void observeCampaignList() {
         mViewModel.getCampaignListEv().observe(requireActivity(), campaignVO -> {
-            Log.e(TAG,"notifyDataSetChanged");
+            Log.e(TAG, "notifyDataSetChanged : "+mAdapter.getItemCount());
             mAdapter.notifyDataSetChanged();
             if (mViewModel.getCampaignList().size() > 0)
                 Log.e(TAG, mViewModel.getCampaignList().get(0).toString());
-            //todo : error on here.
         });
     }
+
     private void observeCampaignClick() {
         mViewModel.navigateToViewerWithPosition().observe(requireActivity(), selectedPosition -> {
             navigateToCampaignViewer();
@@ -87,7 +89,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     }
 
     private void initPager() {
-        mAdapter = new ViewPagerAdapter(getActivity(), mViewModel);
+        mAdapter = new ViewPagerAdapter(getChildFragmentManager(), getLifecycle(), mViewModel);
         mBinding.viewpagerPager.setAdapter(mAdapter);
     }
 
@@ -98,6 +100,10 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         requireActivity().registerReceiver(mScreenOnOffReceiver, intentFilter);
     }
+    private void loadDataFromNetwork(){
+        mBinding.setIsFailedFetchData(false);
+        mViewModel.loadDataFromNetwork(this);
+    }
 
     @Override
     public void onFragmentChangeButtonClick() {
@@ -106,10 +112,21 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
 
     @Override
     public void onDataReloadButtonClick() {
-        mViewModel.loadDataFromNetwork();
+        loadDataFromNetwork();
     }
 
     private void navigateToCampaignViewer() {
         Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_viewpager_detail_fragment_fragment);
+    }
+
+    @Override
+    public void fetchedCampaign(Response response) {
+        mViewModel.setCampaignItems(response);
+    }
+
+    @Override
+    public void fetchedFailCampaign(Throwable error) {
+        Log.e(TAG, error.getMessage());
+        mBinding.setIsFailedFetchData(true);
     }
 }

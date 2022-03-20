@@ -1,6 +1,7 @@
 package com.ababqq.buzzvil_test_android.feature.viewpager.detail;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentDetailBindin
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
 public class ViewPagerItemDetailFragment extends Fragment implements OnRemoveBtnClickListener {
+    private static final String TAG = ViewPagerItemDetailFragment.class.getSimpleName();
 
     private ViewPagerViewModel mViewModel;
     private ViewPagerFragmentDetailBinding mBinding;
@@ -43,6 +45,7 @@ public class ViewPagerItemDetailFragment extends Fragment implements OnRemoveBtn
 
     @Override
     public void onRemoveContentButtonClick() {
+        Log.e(TAG, "onRemoveContentButtonClick");
         mViewModel.removeCampaign();
         Navigation.findNavController(mBinding.getRoot()).popBackStack();
     }

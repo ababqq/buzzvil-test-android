@@ -1,6 +1,7 @@
 package com.ababqq.buzzvil_test_android.models;
 
 import static com.ababqq.buzzvil_test_android.models.CommonCode.BASE_DATABASE;
+import static com.ababqq.buzzvil_test_android.models.CommonCode.BOOKMARK_DATABASE;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,29 +13,29 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.ababqq.buzzvil_test_android.BaseApplication;
-
 @Database(entities = {CampaignBean.class}, version = 1)
-public abstract class CampaignDatabase extends RoomDatabase {
-   private static final String TAG = CampaignDatabase.class.getSimpleName();
-   private static CampaignDatabase instance;
+public abstract class BookmarkDatabase extends RoomDatabase {
+   private static final String TAG = BookmarkDatabase.class.getSimpleName();
+   private static BookmarkDatabase instance;
 
    public abstract CampaignDao campaignDao();
 
-   public static synchronized CampaignDatabase getInstance(Context context) {
+   public static synchronized BookmarkDatabase getInstance(Context context) {
       if (instance == null) {
          instance = Room.databaseBuilder(context.getApplicationContext(),
-                 CampaignDatabase.class, BASE_DATABASE)
+                 BookmarkDatabase.class, BOOKMARK_DATABASE)
                  .fallbackToDestructiveMigration()
                  .allowMainThreadQueries()
                  //.addCallback(roomCallback)
                  .build();
-      }
+         Log.e(TAG,"database ##");
+      }else
+         Log.e(TAG,"duple database");
 
       return instance;
    }
 
-   private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+   private static Callback roomCallback = new Callback() {
       @Override
       public void onCreate(@NonNull SupportSQLiteDatabase db) {
          super.onCreate(db);
@@ -45,7 +46,7 @@ public abstract class CampaignDatabase extends RoomDatabase {
    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
       private CampaignDao campaignDao;
 
-      private PopulateDbAsyncTask(CampaignDatabase db) {
+      private PopulateDbAsyncTask(BookmarkDatabase db) {
          campaignDao = db.campaignDao();
       }
 

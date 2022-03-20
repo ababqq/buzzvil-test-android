@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import com.ababqq.buzzvil_test_android.entity.AdsResponse;
 import com.ababqq.buzzvil_test_android.entity.ArticlesResponse;
 import com.ababqq.buzzvil_test_android.entity.Response;
+import com.ababqq.buzzvil_test_android.feature.viewpager.BookmarkRepository;
 import com.ababqq.buzzvil_test_android.feature.viewpager.CampaignRepository;
 import com.ababqq.buzzvil_test_android.feature.viewpager.OnCampaignFetchedListener;
 import com.ababqq.buzzvil_test_android.feature.viewpager.ViewPagerRepository;
@@ -27,6 +28,7 @@ public class ViewPagerViewModel extends AndroidViewModel {
 
     private ViewPagerRepository mRepository = new ViewPagerRepository();
     private CampaignRepository mCampaignRepository;
+    private BookmarkRepository mBookmarkRepository;
     private SingleLiveEvent<Integer> mCampaignViewer = new SingleLiveEvent<>();
     private SingleLiveEvent<Integer> mCampaignListEv = new SingleLiveEvent<>();
     private List<CampaignBean> mCampaignList = new ArrayList();
@@ -38,6 +40,7 @@ public class ViewPagerViewModel extends AndroidViewModel {
     public ViewPagerViewModel(@NonNull Application application) {
         super(application);
         mCampaignRepository = new CampaignRepository(application);
+        mBookmarkRepository = new BookmarkRepository(application);
         mAdCount = 0;
         mArticleCount = 0;
     }
@@ -60,34 +63,14 @@ public class ViewPagerViewModel extends AndroidViewModel {
             mCampaignListEv.call();
     }
 
-    public void loadDataFromNetwork() {
+    public void loadDataFromNetwork(OnCampaignFetchedListener onCampaignFetchedListener) {
         Log.e(TAG, "loadDataFromNetwork");
         state = INIT_STATE;
         mCampaignBucketList.clear();
         mCampaignList.clear();
         mCampaignListEv.call();
-        mRepository.requestAdCampaigns(new OnCampaignFetchedListener() {
-            @Override
-            public void fetchedCampaign(Response response) {
-                setCampaignItems(response);
-            }
-
-            @Override
-            public void fetchedFailCampaign(Throwable error) {
-                Log.e(TAG, error.getMessage());
-            }
-        });
-        mRepository.requestArticleCampaigns(new OnCampaignFetchedListener() {
-            @Override
-            public void fetchedCampaign(Response response) {
-                setCampaignItems(response);
-            }
-
-            @Override
-            public void fetchedFailCampaign(Throwable error) {
-                Log.e(TAG, error.getMessage());
-            }
-        });
+        mRepository.requestAdCampaigns(onCampaignFetchedListener);
+        mRepository.requestArticleCampaigns(onCampaignFetchedListener);
     }
 
     public List<CampaignBean> getCampaignList() {
@@ -147,8 +130,10 @@ public class ViewPagerViewModel extends AndroidViewModel {
     }
 
     public void saveCampaignsToLocalDB() {
+        Log.d(TAG, "saveCampaignsToLocalDB");
         mCampaignRepository.deleteAll();
         mCampaignRepository.insertAll(mCampaignList);
+
     }
 
     public void shuffleCampaignByAdsRatio() {
@@ -220,16 +205,20 @@ public class ViewPagerViewModel extends AndroidViewModel {
     }
 
     public void setCampaignViewer(int position) {
+        Log.e(TAG, "setCampaignViewer : "+position);
         mCampaignViewer.setValue(position);
     }
 
     public CampaignBean getCampaignViewer() {
+        Log.e(TAG, "getCampaignViewer : "+mCampaignViewer.getValue());
         return mCampaignList.get(mCampaignViewer.getValue());
     }
 
     public void removeCampaign() {
+        Log.e(TAG, "removeCampaign : "+mCampaignViewer.getValue());
         Log.e(TAG, mCampaignList.size() + " before " + mCampaignViewer.getValue());
         mCampaignList.remove(mCampaignViewer.getValue().intValue());
+        mCampaignListEv.call();
         Log.e(TAG, mCampaignList.size() + " after " + mCampaignViewer.getValue());
     }
 }
