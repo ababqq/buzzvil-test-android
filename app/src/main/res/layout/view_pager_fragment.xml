@@ -5,7 +5,8 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel" />
@@ -13,9 +14,11 @@
         <variable
             name="listener"
             type="com.ababqq.buzzvil_test_android.feature.viewpager.OnViewPagerBtnClickListener" />
+
         <variable
             name="isFailedFetchData"
             type="java.lang.Boolean" />
+
         <variable
             name="isFetchingNow"
             type="java.lang.Boolean" />
@@ -31,20 +34,23 @@
             android:id="@+id/viewpager_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/viewpager_pager_state_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:text="@{isFailedFetchData ? @string/viewpager_fail_fetched_campaigns : @string/viewpager_request_fetching_campaigns}"
                 android:textSize="26dp"
-                android:visibility="@{isFetchingNow ? View.VISIBLE : View.INVISIBLE}"
-                android:text="@{isFailedFetchData ? @string/viewpager_fail_fetched_campaigns : @string/viewpager_request_fetching_campaigns}"/>
+                android:visibility="@{isFetchingNow ? View.VISIBLE : View.INVISIBLE}" />
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager_pager"
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:visibility="@{isFetchingNow ? View.INVISIBLE : View.VISIBLE}" />
         </FrameLayout>
 
         <LinearLayout
@@ -62,10 +68,11 @@
                 android:background="@color/buzzvil_primary_light"
                 android:onClick="@{() -> listener.onDataReloadButtonClick()}"
                 android:text="@string/viewpager_txt_reload_data" />
+
             <Button
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:background="@color/buzzvil_primary_light"
                 android:onClick="@{() -> listener.onFragmentChangeButtonClick()}"
                 android:text="@string/viewpager_txt_bookmark" />

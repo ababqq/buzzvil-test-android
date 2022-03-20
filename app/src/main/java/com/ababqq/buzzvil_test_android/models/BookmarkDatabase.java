@@ -28,10 +28,7 @@ public abstract class BookmarkDatabase extends RoomDatabase {
                  .allowMainThreadQueries()
                  //.addCallback(roomCallback)
                  .build();
-         Log.e(TAG,"database ##");
-      }else
-         Log.e(TAG,"duple database");
-
+      }
       return instance;
    }
 

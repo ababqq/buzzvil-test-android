@@ -31,6 +31,7 @@ public class ViewPagerViewModel extends AndroidViewModel {
     private BookmarkRepository mBookmarkRepository;
     private SingleLiveEvent<Integer> mCampaignViewer = new SingleLiveEvent<>();
     private SingleLiveEvent<Integer> mCampaignListEv = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mLoadingEv = new SingleLiveEvent<>();
     private List<CampaignBean> mCampaignList = new ArrayList();
     private List<CampaignBean> mCampaignBucketList = new ArrayList();
 
@@ -204,6 +205,10 @@ public class ViewPagerViewModel extends AndroidViewModel {
 
     public SingleLiveEvent<Integer> getCampaignListEv() {
         return mCampaignListEv;
+    }
+
+    public SingleLiveEvent<Boolean> getLoadingEv() {
+        return mLoadingEv;
     }
 
     public void setCampaignViewer(int position) {
