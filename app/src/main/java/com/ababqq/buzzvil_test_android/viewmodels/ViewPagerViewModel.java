@@ -236,7 +236,6 @@ public class ViewPagerViewModel extends AndroidViewModel {
         Log.e(TAG, "removeCampaign : "+mCampaignViewer.getValue());
         Log.e(TAG, mCampaignList.size() + " before " + mCampaignViewer.getValue());
         mCampaignList.remove(mCampaignViewer.getValue().intValue());
-        mCampaignListEv.call();
         Log.e(TAG, mCampaignList.size() + " after " + mCampaignViewer.getValue());
     }
 }
