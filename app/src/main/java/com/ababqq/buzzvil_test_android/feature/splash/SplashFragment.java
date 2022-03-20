@@ -42,6 +42,7 @@ public class SplashFragment extends Fragment {
             public void fetchedViewPagerConfig(Response response) {
                 AppDatabase.saveViewPagerConfig(requireContext(), response);
 
+                //Test Code
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     Intent intent = new Intent(requireContext(), MainActivity.class);
