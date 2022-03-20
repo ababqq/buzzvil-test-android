@@ -3,6 +3,7 @@ package com.ababqq.buzzvil_test_android.feature.viewpager;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.navigation.Navigation;
 import com.ababqq.buzzvil_test_android.R;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
 import com.ababqq.buzzvil_test_android.entity.Response;
+import com.ababqq.buzzvil_test_android.feature.MainActivity;
 import com.ababqq.buzzvil_test_android.models.AppDatabase;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
@@ -52,6 +54,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         mBinding.setViewModel(mViewModel);
         mBinding.setListener(this);
         mBinding.setIsFailedFetchData(false);
+        mBinding.setIsFetchingNow(false);
         initPager();
         if (mViewModel.getCampaignList().size() == 0)
             mViewModel.loadDataFromLocalDB();
@@ -76,7 +79,9 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     private void observeCampaignList() {
         mViewModel.getCampaignListEv().observe(requireActivity(), campaignVO -> {
             Log.e(TAG, "notifyDataSetChanged : "+mAdapter.getItemCount());
+            //Test Code
             mAdapter.notifyDataSetChanged();
+
             if (mViewModel.getCampaignList().size() > 0)
                 Log.e(TAG, mViewModel.getCampaignList().get(0).toString());
         });
@@ -102,6 +107,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     }
     private void loadDataFromNetwork(){
         mBinding.setIsFailedFetchData(false);
+        mBinding.setIsFetchingNow(true);
         mViewModel.loadDataFromNetwork(this);
     }
 
@@ -122,6 +128,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     @Override
     public void fetchedCampaign(Response response) {
         mViewModel.setCampaignItems(response);
+        mBinding.setIsFetchingNow(false);
     }
 
     @Override

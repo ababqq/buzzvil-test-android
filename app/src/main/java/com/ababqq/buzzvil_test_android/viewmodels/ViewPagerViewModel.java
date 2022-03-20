@@ -84,11 +84,11 @@ public class ViewPagerViewModel extends AndroidViewModel {
             CampaignBean c = list.get(i);
 
             if (c.getType().equals(AdBean.class.getSimpleName()))
-                Log.d(TAG, "AdBean");
+                Log.d(TAG, i+" AdBean");
             else if (c.getType().equals(ArticleBean.class.getSimpleName()))
-                Log.d(TAG, "ArticleBean");
+                Log.d(TAG, i+" ArticleBean");
             else if (c.getType().equals(CampaignBean.class.getSimpleName()))
-                Log.d(TAG, "CampaignBean");
+                Log.d(TAG, i+" CampaignBean");
         }
 
         return mCampaignRepository.getAllCampaign();
@@ -108,9 +108,9 @@ public class ViewPagerViewModel extends AndroidViewModel {
             if (mCampaignBucketList.size() > 0) {
                 demandCrossRatioOrder(shuffleCampaigns());
                 saveCampaignsToLocalDB();
+                mCampaignListEv.call();
                 Log.e(TAG, "repo size : " + getCampaignListFromDB().size());
                 Log.e(TAG, "list size : " + mCampaignList.size());
-                mCampaignListEv.call();
             }
         }
     }
@@ -158,12 +158,14 @@ public class ViewPagerViewModel extends AndroidViewModel {
                 checkSupplyToCrossRatioOrder();
             }
             while (true) {
-                if (firstCampaign.getClass().getSimpleName().equals(shuffleCampaigns().getClass().getSimpleName()) != isNeedCrossType)
+                CampaignBean campaignBean = shuffleCampaigns();
+                if (firstCampaign.getType().equals(campaignBean.getType()) != isNeedCrossType)
                     break;
             }
 
-            saveCampaignsToLocalDB();
             demandCrossRatioOrder(mCampaignList.get(0));
+            saveCampaignsToLocalDB();
+            mCampaignListEv.call();
         }
     }
 

@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel" />
@@ -14,6 +15,9 @@
             type="com.ababqq.buzzvil_test_android.feature.viewpager.OnViewPagerBtnClickListener" />
         <variable
             name="isFailedFetchData"
+            type="java.lang.Boolean" />
+        <variable
+            name="isFetchingNow"
             type="java.lang.Boolean" />
     </data>
 
@@ -34,6 +38,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="26dp"
+                android:visibility="@{isFetchingNow ? View.VISIBLE : View.INVISIBLE}"
                 android:text="@{isFailedFetchData ? @string/viewpager_fail_fetched_campaigns : @string/viewpager_request_fetching_campaigns}"/>
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager_pager"
