@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel" />
+
+        <variable
+            name="listener"
+            type="com.ababqq.buzzvil_test_android.feature.viewpager.OnViewPagerBtnClickListener" />
+
+        <variable
+            name="isFailedFetchData"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="isFetchingNow"
+            type="java.lang.Boolean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".feature.viewpager.ViewPagerFragment">
+
+        <FrameLayout
+            android:id="@+id/viewpager_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/viewpager_pager_state_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@{isFailedFetchData ? @string/viewpager_fail_fetched_campaigns : @string/viewpager_request_fetching_campaigns}"
+                android:textSize="26dp"
+                android:visibility="@{isFetchingNow ? View.VISIBLE : View.INVISIBLE}" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager_pager"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:orientation="horizontal"
+                android:visibility="@{isFetchingNow ? View.INVISIBLE : View.VISIBLE}" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewpager_frame"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@color/buzzvil_primary_light"
+                android:onClick="@{() -> listener.onDataReloadButtonClick()}"
+                android:text="@string/viewpager_txt_reload_data" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/buzzvil_primary_light"
+                android:onClick="@{() -> listener.onFragmentChangeButtonClick()}"
+                android:text="@string/viewpager_txt_bookmark" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

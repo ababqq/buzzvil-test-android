@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/viewpager_fragment">
+
+    <fragment
+        android:id="@+id/viewpager_fragment"
+        android:name="com.ababqq.buzzvil_test_android.feature.viewpager.ViewPagerFragment"
+        tools:layout="@layout/view_pager_fragment">
+
+        <action
+            android:id="@+id/action_viewpager_fragment_to_bookmark_fragment"
+            app:destination="@id/bookmark_fragment" />
+        <action
+            android:id="@+id/action_viewpager_fragment_to_viewpager_detail_fragment_fragment"
+            app:destination="@id/viewpager_detail_fragment" />
+        <action
+            android:id="@+id/action_viewpager_fragment_to_viewpager_refresh_fragment"
+            app:destination="@id/viewpager_refresh" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmark_fragment"
+        android:name="com.ababqq.buzzvil_test_android.feature.viewpager.bookmark.BookmarkFragment"
+        tools:layout="@layout/book_mark_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/viewpager_detail_fragment"
+        android:name="com.ababqq.buzzvil_test_android.feature.viewpager.detail.ViewPagerItemDetailFragment"
+        tools:layout="@layout/view_pager_fragment_detail">
+    </fragment>
+    <fragment
+        android:id="@+id/viewpager_refresh"
+        android:name="com.ababqq.buzzvil_test_android.feature.viewpager.refresh.ViewPagerRefreshFragment"
+        tools:layout="@layout/view_pager_fragment">
+    </fragment>
+</navigation>
