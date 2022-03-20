@@ -7,11 +7,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-@Entity(tableName = "campaign_table")
+@Entity(tableName = "campaign_table" )
 public class CampaignBean {
 
-    @PrimaryKey(autoGenerate = false)
     public Integer index;
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     @Expose
     public Integer id;

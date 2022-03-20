@@ -1,11 +1,9 @@
 package com.ababqq.buzzvil_test_android.models;
 
-import static com.ababqq.buzzvil_test_android.models.CommonCode.BASE_DATABASE;
 import static com.ababqq.buzzvil_test_android.models.CommonCode.BOOKMARK_DATABASE;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;

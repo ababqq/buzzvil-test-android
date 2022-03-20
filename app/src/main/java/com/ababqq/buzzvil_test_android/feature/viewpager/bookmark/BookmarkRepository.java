@@ -1,7 +1,4 @@
-package com.ababqq.buzzvil_test_android.feature.viewpager;
-
-import static com.ababqq.buzzvil_test_android.models.CommonCode.BASE_DATABASE;
-import static com.ababqq.buzzvil_test_android.models.CommonCode.BOOKMARK_DATABASE;
+package com.ababqq.buzzvil_test_android.feature.viewpager.bookmark;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -9,7 +6,6 @@ import android.os.AsyncTask;
 import com.ababqq.buzzvil_test_android.models.BookmarkDatabase;
 import com.ababqq.buzzvil_test_android.models.CampaignBean;
 import com.ababqq.buzzvil_test_android.models.CampaignDao;
-import com.ababqq.buzzvil_test_android.models.CampaignDatabase;
 
 import java.util.ArrayList;
 import java.util.List;

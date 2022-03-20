@@ -37,6 +37,12 @@ public class SplashFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(SplashViewModel.class);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mViewModel.loadViewPagerConfig(new OnConfigFetchedListener() {
             @Override
             public void fetchedViewPagerConfig(Response response) {
@@ -57,12 +63,6 @@ public class SplashFragment extends Fragment {
                 Toast.makeText(requireContext(), getText(R.string.fail_fetched_config), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
         mBinding.setViewModel(mViewModel);
 
         return mBinding.getRoot();

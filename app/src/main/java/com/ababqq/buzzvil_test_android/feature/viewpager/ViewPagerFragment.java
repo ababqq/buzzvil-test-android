@@ -39,8 +39,6 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         observeCampaignList();
         observeCampaignClick();
         observeLoading();
-        if (mViewModel.getCampaignListFromDB().size() == 0)
-            loadDataFromNetwork();
     }
 
     private void initFirstCampaignRatio() {
@@ -52,6 +50,8 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
                              @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         mBinding = mBinding.inflate(LayoutInflater.from(requireContext()));
+        if (mViewModel.getCampaignListFromDB().size() == 0)
+            loadDataFromNetwork();
         mBinding.setViewModel(mViewModel);
         mBinding.setListener(this);
         mBinding.setIsFailedFetchData(false);
@@ -80,7 +80,6 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     private void observeCampaignList() {
         mViewModel.getCampaignListEv().observe(requireActivity(), campaignVO -> {
             Log.e(TAG, "notifyDataSetChanged : "+mAdapter.getItemCount());
-            //Test Code
             mAdapter.notifyDataSetChanged();
 
             if (mViewModel.getCampaignList().size() > 0) {

@@ -9,10 +9,10 @@ import androidx.lifecycle.AndroidViewModel;
 import com.ababqq.buzzvil_test_android.entity.AdsResponse;
 import com.ababqq.buzzvil_test_android.entity.ArticlesResponse;
 import com.ababqq.buzzvil_test_android.entity.Response;
-import com.ababqq.buzzvil_test_android.feature.viewpager.BookmarkRepository;
 import com.ababqq.buzzvil_test_android.feature.viewpager.CampaignRepository;
 import com.ababqq.buzzvil_test_android.feature.viewpager.OnCampaignFetchedListener;
 import com.ababqq.buzzvil_test_android.feature.viewpager.ViewPagerRepository;
+import com.ababqq.buzzvil_test_android.feature.viewpager.bookmark.BookmarkRepository;
 import com.ababqq.buzzvil_test_android.models.AdBean;
 import com.ababqq.buzzvil_test_android.models.ArticleBean;
 import com.ababqq.buzzvil_test_android.models.CampaignBean;
@@ -20,6 +20,7 @@ import com.ababqq.buzzvil_test_android.mvvm.SingleLiveEvent;
 import com.ababqq.buzzvil_test_android.utilities.DataCollection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewPagerViewModel extends AndroidViewModel {
@@ -92,7 +93,17 @@ public class ViewPagerViewModel extends AndroidViewModel {
                 Log.d(TAG, i+" CampaignBean");
         }
 
-        return mCampaignRepository.getAllCampaign();
+        Collections.sort(list, (o1, o2) -> {
+            if (o1.getIndex() > o2.getIndex()) {
+                return 1;
+            } else if (o1.getIndex() < o2.getIndex()) {
+                return -1;
+            }
+            return 0;
+        });
+        //if (list.size()>0)
+        //mBookmarkRepository.insert(list.get(0));
+        return list;
     }
 
     public void setCampaignItems(Response response) {

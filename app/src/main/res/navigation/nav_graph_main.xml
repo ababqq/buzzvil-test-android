@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookmark_fragment"
-        android:name="com.ababqq.buzzvil_test_android.feature.bookmark.BookMarkFragment"
+        android:name="com.ababqq.buzzvil_test_android.feature.viewpager.bookmark.BookmarkFragment"
         tools:layout="@layout/book_mark_fragment">
     </fragment>
     <fragment
