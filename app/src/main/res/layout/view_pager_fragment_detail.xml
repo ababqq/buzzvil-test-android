@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel" />
+
+        <variable
+            name="campaignItem"
+            type="com.ababqq.buzzvil_test_android.models.CampaignBean" />
+
+        <variable
+            name="listener"
+            type="com.ababqq.buzzvil_test_android.feature.viewpager.detail.OnRemoveBtnClickListener" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".feature.viewpager.detail.ViewPagerItemDetailFragment">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/viewpager_item_txt_loading"
+                    android:textSize="18dp"
+                    tools:text="name" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:campaignImageUrl="@{campaignItem.imageUrl}"
+                    tools:background="@color/black" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="24dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:campaignIdText="@{campaignItem.id.toString()}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_marginTop="6dp"
+                app:campaignNameText="@{campaignItem.name}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:campaignImageUrlText="@{campaignItem.imageUrl}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:campaignPriorityText="@{campaignItem.firstDisplayPriority.toString()}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:campaignWeightText="@{campaignItem.firstDisplayWeight.toString()}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:campaignFrequencyText="@{campaignItem.frequency.toString()}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:campaignLandingUrlText="@{campaignItem.landingUrl}"
+                android:textSize="18dp"
+                tools:text="name" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:background="@color/buzzvil_primary_light"
+                android:onClick="@{() -> listener.onRemoveContentButtonClick()}"
+                android:text="@string/viewpager_item_detail_txt_remove" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">buzzvil-test-android</string>
 
+    <string name="viewpager_txt_bookmark">Bookmark List</string>
+    <string name="viewpager_txt_reload_data">Reload data</string>
+    <string name="viewpager_item_txt_loading">Campaign Loading...</string>
+    <string name="viewpager_item_detail_txt_remove">Do not see this content.</string>
+    <string name="viewpager_request_fetching_campaigns">Campaign\nLoading Now...</string>
+    <string name="viewpager_fail_fetched_campaigns">Sorry, We can not get any campaigns now</string>
+
     <string name="fail_fetched_config">Sorry, The service is under updates.\nWe look forward to providing you with better service.</string>
-    <string name="fail_fetched_ads">Sorry, We do not have any Ads now</string>
-    <string name="fail_fetched_campaigns">Sorry, We do not have any Campaigns now</string>
+
+
 
 
 </resources>

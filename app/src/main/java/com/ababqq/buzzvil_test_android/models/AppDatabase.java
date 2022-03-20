@@ -19,4 +19,9 @@ public class AppDatabase {
         editor.commit();
         editor.apply();
     }
+
+    public static String loadViewPagerConfig(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(PREFERENCE_FIRST_RATIO, "1:1");
+    }
 }

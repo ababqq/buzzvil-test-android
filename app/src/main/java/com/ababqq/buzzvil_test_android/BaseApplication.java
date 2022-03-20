@@ -12,7 +12,6 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class BaseApplication extends Application {
     private static final String TAG = BaseApplication.class.getSimpleName();
-    private static final String LOG_TAG = "LOG";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,7 +24,7 @@ public class BaseApplication extends Application {
                 .methodCount(3) // 2
                 .methodOffset(1) //0
                 //.logStrategy()
-                .tag(LOG_TAG)
+                .tag(TAG)
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
             @Override
