@@ -1,5 +1,7 @@
 package com.ababqq.buzzvil_test_android.feature.viewpager;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     private ViewPagerFragmentBinding mBinding;
     private ViewPagerAdapter mAdapter;
 
+    private ScreenOnOffReceiver mScreenOnOffReceiver;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,6 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         if (mViewModel.getCampaignListFromDB().size() == 0)
             mViewModel.loadDataFromNetwork();
     }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         if(mViewModel.getCampaignList().size() == 0)
             mViewModel.loadDataFromLocalDB();
         mAdapter.notifyDataSetChanged();
+        initBroadcastReceiver();
         return mBinding.getRoot();
     }
 
@@ -51,6 +55,13 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
+        requireActivity().unregisterReceiver(mScreenOnOffReceiver);
     }
 
     private void observeCampaignList() {
@@ -71,7 +82,14 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
     private void initPager() {
         mAdapter = new ViewPagerAdapter(getActivity(), mViewModel);
         mBinding.viewpagerPager.setAdapter(mAdapter);
+    }
 
+    private void initBroadcastReceiver() {
+        mScreenOnOffReceiver = new ScreenOnOffReceiver(mViewModel);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        requireActivity().registerReceiver(mScreenOnOffReceiver, intentFilter);
     }
 
     @Override
