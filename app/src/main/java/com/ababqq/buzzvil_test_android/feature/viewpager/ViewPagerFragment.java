@@ -38,6 +38,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         initFirstCampaignRatio();
         observeCampaignList();
         observeCampaignClick();
+        observeLoading();
         if (mViewModel.getCampaignListFromDB().size() == 0)
             loadDataFromNetwork();
     }
@@ -82,14 +83,25 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
             //Test Code
             mAdapter.notifyDataSetChanged();
 
-            if (mViewModel.getCampaignList().size() > 0)
+            if (mViewModel.getCampaignList().size() > 0) {
                 Log.e(TAG, mViewModel.getCampaignList().get(0).toString());
+                navigateToRefresh();
+            }
         });
     }
 
     private void observeCampaignClick() {
         mViewModel.navigateToViewerWithPosition().observe(requireActivity(), selectedPosition -> {
             navigateToCampaignViewer();
+        });
+    }
+    private void observeLoading() {
+        mViewModel.getLoadingEv().observe(requireActivity(), aBoolean -> {
+            if (aBoolean){
+                mBinding.setIsFetchingNow(true);
+            }else {
+                mBinding.setIsFetchingNow(false);
+            }
         });
     }
 
@@ -113,7 +125,7 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
 
     @Override
     public void onFragmentChangeButtonClick() {
-        Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_bookmark_fragment);
+        navigateToBookmark();
     }
 
     @Override
@@ -121,6 +133,12 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         loadDataFromNetwork();
     }
 
+    private void navigateToRefresh() {
+        Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_viewpager_refresh_fragment);
+    }
+    private void navigateToBookmark() {
+        Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_bookmark_fragment);
+    }
     private void navigateToCampaignViewer() {
         Navigation.findNavController(mBinding.getRoot()).navigate(R.id.action_viewpager_fragment_to_viewpager_detail_fragment_fragment);
     }
