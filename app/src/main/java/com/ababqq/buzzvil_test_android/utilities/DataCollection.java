@@ -38,9 +38,9 @@ public class DataCollection {
 
         CampaignBean first = list.get(probabilityList.get(random.nextInt(probabilityList.size())));
 
-        if (first instanceof AdBean)
+        if (first.getType().equals(AdBean.class.getSimpleName()))
             Log.e(TAG, first.id + " ads " + first.firstDisplayPriority + " " + first.firstDisplayWeight);
-        else if (first instanceof ArticleBean)
+        else if (first.getType().equals(ArticleBean.class.getSimpleName()))
             Log.e(TAG, first.id + " article " + first.firstDisplayPriority + " " + first.firstDisplayWeight);
 
         return first;

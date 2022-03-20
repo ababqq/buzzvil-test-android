@@ -6,6 +6,9 @@ import android.util.Log;
 import com.ababqq.buzzvil_test_android.api.TestApi;
 import com.ababqq.buzzvil_test_android.entity.AdsResponse;
 import com.ababqq.buzzvil_test_android.entity.ArticlesResponse;
+import com.ababqq.buzzvil_test_android.models.AdBean;
+import com.ababqq.buzzvil_test_android.models.ArticleBean;
+import com.ababqq.buzzvil_test_android.models.CampaignBean;
 import com.ababqq.buzzvil_test_android.network.RetrofitInstance;
 import com.ababqq.buzzvil_test_android.utilities.Logger;
 
@@ -36,6 +39,9 @@ public class ViewPagerRepository {
                 .subscribe(
                         adsResponse -> {
                             //Logger.json(TAG, adsResponse);
+                            for (int i=0; i<adsResponse.campaignVOList.size();i++){
+                                adsResponse.campaignVOList.get(i).setType(AdBean.class.getSimpleName());
+                            }
                             listener.fetchedCampaign(adsResponse);
                         },
                         error -> {
@@ -53,6 +59,9 @@ public class ViewPagerRepository {
                 .subscribe(
                         articlesResponse -> {
                             //Logger.json(TAG, articlesResponse);
+                            for (int i=0; i<articlesResponse.campaignVOList.size();i++){
+                                articlesResponse.campaignVOList.get(i).setType(ArticleBean.class.getSimpleName());
+                            }
                             listener.fetchedCampaign(articlesResponse);
                         },
                         error -> {

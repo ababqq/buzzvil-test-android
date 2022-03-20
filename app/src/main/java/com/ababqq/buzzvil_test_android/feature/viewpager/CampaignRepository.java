@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.ababqq.buzzvil_test_android.models.AdBean;
+import com.ababqq.buzzvil_test_android.models.ArticleBean;
 import com.ababqq.buzzvil_test_android.models.CampaignBean;
 import com.ababqq.buzzvil_test_android.models.CampaignDao;
 import com.ababqq.buzzvil_test_android.models.CampaignDatabase;
@@ -39,8 +41,8 @@ public class CampaignRepository {
     public void deleteAll() {
         campaignDao.deleteAllCampaign();
     }
-    public List<CampaignBean> getAll() {
-        return campaignDao.getAllCampaign();
+    public List<CampaignBean> getAllCampaign() {
+        return new ArrayList<>(campaignDao.getAllCampaign());
     }
 
 
@@ -61,10 +63,6 @@ public class CampaignRepository {
 
     public void deleteAllAsync() {
         new DeleteAllCampaignsAsyncTask(campaignDao).execute();
-    }
-
-    public List<CampaignBean> getAllCampaign() {
-        return new ArrayList<>(campaignDao.getAllCampaign());
     }
 
     private static class InsertCampaignAsyncTask extends AsyncTask<CampaignBean, Void, Void> {

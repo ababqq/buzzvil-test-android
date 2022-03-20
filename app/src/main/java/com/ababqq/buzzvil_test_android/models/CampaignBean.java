@@ -33,6 +33,7 @@ public class CampaignBean {
     @SerializedName("landing_url")
     @Expose
     public String landingUrl;
+    public String type;
 
     public CampaignBean(Integer id, String name, String imageUrl, Integer firstDisplayPriority, Integer firstDisplayWeight, Integer frequency, String landingUrl) {
         this.id = id;
@@ -106,6 +107,14 @@ public class CampaignBean {
 
     public void setLandingUrl(String landingUrl) {
         this.landingUrl = landingUrl;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

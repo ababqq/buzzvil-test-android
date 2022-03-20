@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 
 import com.ababqq.buzzvil_test_android.R;
 import com.ababqq.buzzvil_test_android.databinding.ViewPagerFragmentBinding;
+import com.ababqq.buzzvil_test_android.models.AppDatabase;
 import com.ababqq.buzzvil_test_android.viewmodels.ViewPagerViewModel;
 
 public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickListener {
@@ -31,11 +32,17 @@ public class ViewPagerFragment extends Fragment implements OnViewPagerBtnClickLi
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewPagerViewModel.class);
+        initFirstCampaignRatio();
         observeCampaignList();
         observeCampaignClick();
         if (mViewModel.getCampaignListFromDB().size() == 0)
             mViewModel.loadDataFromNetwork();
     }
+
+    private void initFirstCampaignRatio() {
+        mViewModel.setFirstCampaignRatio(AppDatabase.loadViewPagerConfig(requireContext()));
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

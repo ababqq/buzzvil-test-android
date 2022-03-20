@@ -20,7 +20,7 @@ public class ScreenOnOffReceiver extends BroadcastReceiver {
         switch (intent.getAction()){
             case Intent.ACTION_SCREEN_ON:
                 Log.e(TAG, "ON");
-                mViewModel.loadDataFromNetwork();
+                mViewModel.shuffleCampaignByAdsRatio();
                 break;
             case Intent.ACTION_SCREEN_OFF:
                 Log.e(TAG, "OFF");
